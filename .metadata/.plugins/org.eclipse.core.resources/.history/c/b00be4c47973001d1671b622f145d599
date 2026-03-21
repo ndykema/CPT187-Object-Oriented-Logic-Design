@@ -1,0 +1,30 @@
+package edu.cpt187.dykema.program6;
+
+public class Purchase {
+Computer model;
+Upgrade upgrade;
+
+public String getModelName() {
+	String name = model.getName();
+	return name;
+}
+public double getModelPrice() {
+	double price = model.getPrice();
+	return price;
+}
+
+public String getUpgradeName() {
+	String name = upgrade.getName();
+	return name;
+}
+
+public double getUpgradePrice() {
+	double price = upgrade.getPrice();
+	return price;
+}
+public double getTotalPrice() {
+	double price = getUpgradePrice()+getModelPrice();
+	return price;
+ }
+}
+

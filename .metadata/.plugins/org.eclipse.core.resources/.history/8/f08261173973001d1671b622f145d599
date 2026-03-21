@@ -1,0 +1,10 @@
+package edu.cpt187.dykema.program6;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

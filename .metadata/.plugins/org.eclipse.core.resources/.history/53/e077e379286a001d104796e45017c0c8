@@ -1,0 +1,80 @@
+package edu.cpt187.lastname.program5;
+
+import java.util.*;
+import java.io.*;
+
+public class ToolKeeper {
+
+static ArrayList<Tool>toolList=new ArrayList<>();
+
+public static void loadToolList(String filePath) throws IOException {
+	FileInputStream toolFile = new FileInputStream(filePath);
+	Scanner inputFile = new Scanner(toolFile);
+	
+	while(inputFile.hasNext()) {
+		String tool = inputFile.next();
+		boolean availability = inputFile.nextBoolean();
+		String owner = inputFile.next();
+		Tool entry = new Tool(tool,availability,owner);
+		toolList.add(entry);
+	}
+	inputFile.close();
+}
+
+public int getNumTools() {
+	return toolList.size();
+}
+
+public static Tool findToolByName(String searchInput) {
+	int mid = 0;
+	int first = 0;
+	int last = toolList.size()-1;
+	Tool searchedTool = null;
+	boolean exists = false;
+	int position = 0 ;
+	
+	while(exists == false)
+	{
+	mid = (first + last)/2;
+	System.out.println(mid);
+	System.out.println(last);
+	System.out.println(searchInput);
+	int thing = toolList.get(mid).getToolName().compareToIgnoreCase(searchInput);
+	System.out.println(thing);
+	System.out.println(toolList.get(mid).getToolName());
+	if(toolList.get(mid).getToolName().compareToIgnoreCase(searchInput)== 0) {
+		exists = true;
+		position = mid;
+	}
+	else if(toolList.get(mid).getToolName().compareToIgnoreCase(searchInput) < 0) {
+		last = mid-1;
+	}
+	else {
+		first = mid+1;
+	}
+	
+	if (exists = true) {
+		searchedTool = toolList.get(position);
+		
+	}
+	
+	}
+	return searchedTool;
+}
+
+public static void addTool(Tool toolInput) {
+	toolList.add(toolInput);
+		}
+
+public static void removeTool(Tool toolInput) {
+	toolList.remove(toolInput);
+}
+
+public static ArrayList<Tool> getToolList()
+{
+	return toolList;
+}
+
+}
+
+

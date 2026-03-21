@@ -1,0 +1,94 @@
+package edu.cpt187.dykema.program4;
+
+import java.io.*;
+import java.util.*;
+
+public class MainClass {
+	public static String FILE_PATH = "Grades.txt";
+
+	public static void main(String[] args) throws IOException {
+		int numStudents = 10;
+		int numGrades = 8;
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(fileGrades);
+
+		// readFileTitle();
+		// readNames(numStudents,numGrades);
+		readGrades(numGrades, numStudents);
+		// while (Grades.hasNext())
+		// {
+		// String line = Grades.nextLine();
+		// System.out.println(line);
+		// }
+
+		Grades.close();
+
+	}
+
+	public static void readFileTitle() throws FileNotFoundException {
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(fileGrades);
+		String title = Grades.nextLine();
+		System.out.println(title);
+		Grades.close();
+	}
+
+	public static void readNames(int numStudents, int numGrades) throws FileNotFoundException {
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(fileGrades);
+		String[] studentNames = new String[numStudents];
+		Grades.nextLine();
+		for (int i = 0; i < numStudents; i++) {
+			studentNames[i] = Grades.next();
+			Grades.nextLine();
+			System.out.printf("%s\n", studentNames[i]);
+		}
+	}
+
+	public static void readGrades(int numGrades, int numStudents) throws FileNotFoundException {
+	
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+
+		Scanner Grades = new Scanner(fileGrades);
+		
+		while (Grades.hasNext()) 
+		{ 
+			
+			int Exam = 0;
+			double[] studentGrades;
+			
+			for (int a = 0; a<numStudents; a++)
+		
+		{
+				int i=0;
+		 studentGrades = new double[numStudents];
+			Grades.nextLine();
+			Grades.next();
+		double gradeTally =0;
+			for (i = 0; i < numGrades; i++) {
+				int number;
+				number = Grades.nextInt();
+				if (i == 7) 
+				{
+					Exam = number * 3;
+					gradeTally += number;
+				} 
+				else if (i < 6) 
+				{
+					gradeTally += number;
+				}
+				System.out.println(gradeTally);
+			}
+			gradeTally += Exam;
+			double averageGrade = gradeTally / 10;
+			studentGrades[a]=averageGrade;
+			for (int e = 0; e>numStudents;e++)
+			{
+				System.out.println(studentGrades[a]);
+			}
+				
+		}
+		}
+	}
+
+}

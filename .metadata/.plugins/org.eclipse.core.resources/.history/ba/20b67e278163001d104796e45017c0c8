@@ -1,0 +1,23 @@
+package edu.cpt187.dykema.program4;
+
+import java.io.*;
+import java.util.*;
+
+public class MainClass {
+	public static String FILE_PATH = "Grades.txt";
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner (fileGrades);
+		//name then 7 grades
+		while (Grades.hasNext()) 
+		{
+			String studentNames = Grades.nextLine();
+			double studentGrades = Grades.nextDouble();
+			
+		}
+		Grades.close();
+	}
+	}

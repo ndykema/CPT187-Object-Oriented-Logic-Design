@@ -1,0 +1,64 @@
+package edu.cpt187.dykema.program4;
+
+import java.util.*;
+import java.io.*;
+
+public class ClassRoom {
+	public String courseName;
+	public String[] studentNames;
+	public double[] studentGrades;
+	int numStudents =50;
+	double numGrades = 8;
+	String name;
+	public int ZERO = 0;
+
+	public void loadGrades(String FILE_PATH) throws FileNotFoundException
+	{
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Names = new Scanner(fileGrades);
+		Names.nextLine();
+		for (int i = ZERO; i < numStudents; i++) 
+		{
+			studentNames[i] = Names.next();
+			Names.nextLine();
+		}
+		Names.close();
+		
+		//I found it easier to break up the filtering into two separate instances of filtering, rather 
+		// than doing all of the filtering under one opening of the file.
+		//I am sure that there is a WAY more efficient way to do this, but I couldn't really figure out
+		//how to do it efficiently.
+		FileInputStream file = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(file);
+		while (Grades.hasNext()) 
+		{ 
+			int Exam = ZERO;
+				for (int a = ZERO; a<numStudents; a++)
+					
+				{
+					int i=ZERO;
+						Grades.nextLine();
+						Grades.next();
+						double gradeTally =0;
+						for (i = 0; i < numGrades; i++) {
+							int number;
+							number = Grades.nextInt();
+							if (i == 7) 
+							{
+								Exam = number * 3;
+								gradeTally += number;
+							} 
+							else if (i < 6) 
+							{
+								gradeTally += number;
+							}
+						}
+						gradeTally += Exam;
+						double averageGrade = gradeTally / 10;
+						studentGrades[a]=averageGrade;	
+				}
+		}
+		Grades.close();
+	}
+}
+

@@ -1,0 +1,41 @@
+package edu.cpt187.lastname.program5;
+import java.util.*;
+import java.io.*;
+public class MainClass {
+
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+	displayMenu();
+	
+	}
+	public static void displayMenu()
+	{
+		System.out.println("Welcome to the Tool Keeper Program");
+		System.out.println("\nPlease Select an option from the Menu Below\n");
+		System.out.println("\tA.) Check Tool Availability");
+		System.out.println("\tB.) Display List of Tools");
+		System.out.println("\tC.) Add a Tool to the Tool List");
+		System.out.println("\tD.) Remove a Tool from the Tool List");
+		System.out.println("\tQ.) Quit Program");
+	}
+	public static Tool createTool(Scanner borrowedinput)
+	{
+		String toolName;
+		String toolOwner;
+		System.out.println("Please enter the name of the tool you wish to add to the Tool List!");
+		toolName = borrowedinput.nextLine().toLowerCase();
+		
+		System.out.println("Please enter the owner of the tool! Example:Chad");
+		toolOwner = borrowedinput.nextLine();
+		Tool customTool = new Tool(toolName, toolOwner);
+		
+	return customTool;
+	}
+	}
+		
+					
+	
+
+
+	

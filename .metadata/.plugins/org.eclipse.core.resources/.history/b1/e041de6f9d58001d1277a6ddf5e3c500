@@ -1,0 +1,63 @@
+package edu.cpt187.dykema.program2;
+
+public class House {
+	public final double BASE_COST = 30000;
+	public final double BEDROOM_COST = 5000;
+	public final double BATHROOM_COST = 7500;
+	private String floorPlan;
+	private int numBedrooms;
+	private int numBathrooms;
+	public String name;
+
+	public House(String name, int numBedrooms) {
+		this.name = name;
+		this.numBedrooms = numBedrooms;
+		numBathrooms = 1;
+	}
+
+	public House(String name, int numBedrooms, int numBathrooms) {
+		this.name = name;
+		this.numBedrooms = numBedrooms;
+		this.numBathrooms = numBathrooms;
+	}
+
+	public String getFloorPlan() {
+		String name;
+		if (numBedrooms > 3) {
+			name = "Charleston";
+		} else if (numBedrooms < 3) {
+			name = "Ashley";
+		} else {
+			name = "Cooper";
+		}
+		return name;
+	}
+
+	public int getNumBedrooms() {
+		return numBedrooms;
+	}
+
+	public int getNumBathrooms() {
+		return numBathrooms;
+	}
+
+	public void setNumBathrooms(int numBathrooms) {
+
+	}
+
+	public double calculateBedroomCost() {
+		double totalBedroomCost = numBedrooms * BEDROOM_COST;
+		return totalBedroomCost;
+	}
+
+	public double calculateBathroomCost() {
+		double totalBathroomCost = numBathrooms * BATHROOM_COST;
+		return totalBathroomCost;
+	}
+
+	public double totalMaterialCost() {
+
+		double totalMaterialCost = calculateBathroomCost() + calculateBedroomCost() + BASE_COST;
+		return totalMaterialCost;
+	}
+}

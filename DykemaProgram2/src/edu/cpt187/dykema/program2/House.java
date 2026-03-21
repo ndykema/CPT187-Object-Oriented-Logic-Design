@@ -1,0 +1,90 @@
+//NathanDykema
+//CPT187
+//10/31/22
+
+package edu.cpt187.dykema.program2;
+
+public class House {
+	
+	//Declaring the Field Variables for the House Class
+	//Base Cost of the House (without bed or bath)
+	public final double BASE_COST = 30000;
+	//Cost of each individual Bedroom
+	public final double BEDROOM_COST = 5000;
+	//Cost of each individual Bathroom
+	public final double BATHROOM_COST = 7500;
+	
+	//Private Variables used to hold information inside this class
+	private String floorPlan;
+	private int numBedrooms;
+	private int numBathrooms;
+	private String name;
+
+	//Constructor Creation #1 -- I don't entirely understand the purpose of this constructor after we wrote
+	//the program in a way where it wouldn't accept half baths or negative variables. What is the purpose of
+	//having a default constructor when our program REQUIRES an input for the number of Bathrooms??
+	
+	//If there is a way that I misinterpreted or misunderstood the instructions of this program, to better 
+	//utilize this default constructor, please let me know!
+	public House(String name, int numBedrooms) {
+		this.name = name;
+		this.numBedrooms = numBedrooms;
+		numBathrooms = 1;
+	}
+	
+	// Construction Creation #2
+	public House(String name, int numBedrooms, int numBathrooms) {
+		this.name = name;
+		this.numBedrooms = numBedrooms;
+		this.numBathrooms = numBathrooms;
+	}
+	//Method to get the floor plan name using the number of bedrooms that the user selected through the Main Method.
+	public String getFloorPlan() {
+		String name;
+		if (numBedrooms > 3) {
+			name = "Charleston";
+		} else if (numBedrooms < 3) {
+			name = "Ashley";
+		} else {
+			name = "Cooper";
+		}
+		return name;
+	}
+
+	//Method to get the number of Bedrooms that the floor plan has from the constructor, and from the user selection
+	//in the Main Method
+	public int getNumBedrooms() {
+		return numBedrooms;
+	}
+
+	//Method to get the number of Bathrooms that the floor plan has from the constructor after the User has input 
+	//an integer value.
+	public int getNumBathrooms() {
+		return numBathrooms;
+	}
+
+	//Method used to set the number of Bathrooms -- I built this method, but ultimately found myself not needing it.
+	//Is there a better way to write my program that would incorporate this method and simplify my Main Method?
+	public void setNumBathrooms(int numBathrooms) {
+
+	}
+	
+	//Method used to calculate the cost of the Bedrooms after the User selected their floor plan.
+	public double calculateBedroomCost() {
+		double totalBedroomCost = numBedrooms * BEDROOM_COST;
+		return totalBedroomCost;
+	}
+
+	//Method used to calculate the cost of the Bathrooms after the User input the desired number of Bathrooms
+	public double calculateBathroomCost() {
+		double totalBathroomCost = numBathrooms * BATHROOM_COST;
+		return totalBathroomCost;
+	}
+
+	//Method used to calculate the total material costs of the house.(Base cost + bathroom cost + bedroom cost)
+	public double totalMaterialCost() {
+
+		double totalMaterialCost = calculateBathroomCost() + calculateBedroomCost() + BASE_COST;
+		return totalMaterialCost;
+	}
+}

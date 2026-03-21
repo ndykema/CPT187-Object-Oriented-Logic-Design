@@ -1,0 +1,113 @@
+package edu.cpt187.dykema.program6;
+import java.util.ArrayList;
+
+public class Catalog {
+		private static final String[] TEST_MODEL_NAMES = {"Jaguar", "Snow Leopard", "Sabertooth" };
+		private static final double[] TEST_MODEL_PRICES = {419.99, 518.99, 599.99 };
+		private static final String[] TEST_MODEL_NUMBERS = {"17-010", "15-012", "13-017" };
+		private static final String[] TEST_MODEL_DESCRIPTIONS = {
+				"P17 laptop with microtron technology.",
+				"L15 laptop with blacksmith screen.",
+				"S13 laptop with altraX motherboard."
+		};
+				
+		private static final String[] TEST_UPGRADE_NAMES = {"HD upgrade", "MEM upgrade", "Total Upgrade", "None" };
+		private static final double[] TEST_UPGRADE_PRICES = {419.99, 518.99, 599.99, 0.00 };
+		private static final String[] TEST_UPGRADE_DESCRIPTIONS = {
+				"Add two Terabyte hard drive",
+				"Add sixteen gigabyte memory card.",
+				"Above upgrades plus Zenon-7 graphics card.",
+				"no-upgrade added"
+		};
+				
+		private static ArrayList<Computer> baseModelList = new ArrayList<Computer>();
+		
+		private ArrayList<Upgrade> upgradeList = new ArrayList<Upgrade>();
+		
+		public Catalog() {
+			loadModels();
+			loadUpgrades();
+		}
+
+		private void loadModels() {
+			for (int i=0; i < TEST_MODEL_NAMES.length; i++) {
+				String name = TEST_MODEL_NAMES[i];
+				String description = TEST_MODEL_DESCRIPTIONS[i];
+				String modelId = TEST_MODEL_NUMBERS[i];
+				double price = TEST_MODEL_PRICES[i];
+				baseModelList.add(new Computer(name, modelId, description, price));
+			}
+		}
+
+		private void loadUpgrades() {
+			for (int i=0; i < TEST_UPGRADE_NAMES.length; i++) {
+				String name = TEST_UPGRADE_NAMES[i];
+				String description = TEST_UPGRADE_DESCRIPTIONS[i];
+				double price = TEST_UPGRADE_PRICES[i];
+				upgradeList.add(new Upgrade(name, description, price));
+			}
+		}
+		
+		public static ArrayList<Computer> getBaseModelList() {
+			// TODO -- return a copy of the list of base models
+			ArrayList<Computer> copyModelList = new ArrayList<Computer>();
+			for(int i = 0; i<baseModelList.size(); i++) {
+				Computer copy = new Computer(baseModelList.get(i));
+				copyModelList.add(i,copy);
+			}
+			return copyModelList;
+		}
+		
+		public ArrayList<Upgrade> getUpgradeList() {
+			// TODO -- return a copy of the list of possible upgrades
+			ArrayList<Upgrade> copyUpgradeList = new ArrayList<Upgrade>();
+			for(int i = 0; i<upgradeList.size(); i++) {
+				Upgrade copy = new Upgrade(upgradeList.get(i));
+				copyUpgradeList.add(i,copy);
+			}
+			return copyUpgradeList;
+		}
+		public Computer findComputerByModelId(String model) {
+			ArrayList<Computer> copyModelList = getBaseModelList();
+				int mid = 0;
+				int first = 0;
+				int last = copyModelList.size() - 1;
+				Computer searchModel = null;
+				boolean exists = false;
+				int position = 0;
+
+				while (exists == false && first <= last)
+
+				{
+					mid = (first + last) / 2;
+					if (copyModelList.get(mid).getName().compareToIgnoreCase(model) == 0) {
+						exists = true;
+						position = mid;
+					} else if (copyModelList.get(mid).getName().compareToIgnoreCase(model) < 0) {
+						first = (mid + 1);
+					} else {
+						last = mid - 1;
+					}
+
+				}
+				if (exists == true) {
+					searchModel = copyModelList.get(position);
+				} 
+				else {
+					searchModel = null;
+				}
+
+				return searchModel;
+		}
+		public void findModelByName() {
+			
+		}
+		public void modifyModelPrice(String modelId, double newPrice) {
+			Computer model = findComputerByModelId(modelId);
+			model.setPrice(newPrice);
+			}
+				
+		
+	}
+
+

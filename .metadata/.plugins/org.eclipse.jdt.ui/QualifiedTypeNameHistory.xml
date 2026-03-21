@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.io.File"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="edu.cpt187.lastname.program5.ToolKeeper"/>
+    <fullyQualifiedTypeName name="edu.cpt187.dykema.program6.Catalog"/>
+    <fullyQualifiedTypeName name="edu.cpt187.dykema.program6.Computer"/>
+    <fullyQualifiedTypeName name="edu.cpt187.dykema.program6.Purchase"/>
+</qualifiedTypeNameHistroy>

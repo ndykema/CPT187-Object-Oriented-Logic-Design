@@ -1,0 +1,28 @@
+package edu.cpt187.lastname.program5;
+
+public class Tool {
+static String toolName;
+static String owner;
+static boolean availability;
+
+Tool(String toolName,String owner){
+	availability = true;
+}
+Tool(String toolName,boolean availability, String owner){}
+
+public static String getToolName(){
+	return toolName;
+}
+
+public static String getOwnerName() {
+	return owner;
+}
+
+public static boolean getToolAvailability() {
+	return availability;
+}
+
+public void setToolAvailability(boolean available) {
+	availability = available;
+}
+}

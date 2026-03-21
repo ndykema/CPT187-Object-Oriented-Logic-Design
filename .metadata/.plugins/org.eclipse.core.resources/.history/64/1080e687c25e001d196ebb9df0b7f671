@@ -1,0 +1,10 @@
+package edu.cpt187.dykema.program3;
+
+public class AnalysisTracker {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

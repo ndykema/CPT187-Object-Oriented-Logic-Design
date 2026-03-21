@@ -1,0 +1,67 @@
+package edu.cpt187.dykema.program3;
+
+import java.util.Random;
+
+public class AnalysisTracker {
+public static final String EMPLOYEE_NAME = "Mark";
+public static final double EMPLOYEE_SALARY = 19.50;
+public static final int NUM_OF_WEEKS = 32;
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int min=40;
+		int max=50;
+		int minWeeks = 1;
+		int maxWeeks = 52;
+		int numberOfWeeks;
+		int hours=0;
+		
+		
+		
+		numberOfWeeks = getNumberOfWeeks(minWeeks,maxWeeks);
+		Employee employee = new Employee(EMPLOYEE_NAME, EMPLOYEE_SALARY,NUM_OF_WEEKS);
+	
+		for(int i=0; i < employee.getTotalWeeks();)
+		{
+			hours = generateRandomHours(min,max);
+			employee.setHoursForWeek(i,hours);
+			i++;
+		}
+		
+		generateReport(employee.getName(),employee.getTotalWeeks(),employee.calculateTotalPay(),employee.calculateAveragePay(),
+				employee.calculateTotalHours(),employee.calculateAverageHours(), employee.findMinWeekIndex(),employee.findMaxWeekIndex());
+		
+		
+		
+	}
+
+
+static Random rand = new Random();
+static public int generateRandomHours(int min,int max)
+{
+	int number;
+	number = rand.nextInt(max-min);
+	number += min;
+	return number;
+}	
+static public int getNumberOfWeeks(int min, int max)
+{
+	int number;
+	number=rand.nextInt(max-min);
+	number += min;
+	return number;
+}
+static public void generateReport(String borrowedName, int borrowedTotalWeeks, double borrowedTotalPay, double borrowedAvgPay, double borrowedTotalHours,
+		double borrowedAverageHours, double borrowedLeastHours, double borrowedMostHours)
+{
+	System.out.println("EMPLOYEE REPORT");
+	System.out.printf("Employee Name: %15s\n",borrowedName);
+	System.out.printf("Total Weeks Worked: %10d\n",borrowedTotalWeeks);
+	System.out.printf("\nTotal Pay: %19.2f",borrowedTotalPay);
+	System.out.printf("\nAverage Pay: %18.2f\n",borrowedAvgPay);
+	System.out.printf("\nTotal Hours: %18.2f",borrowedTotalHours);
+	System.out.printf("\nAverage Hours: %16.2f ",borrowedAverageHours);
+	System.out.printf("\nLeast Hours: %18.2f",borrowedLeastHours);
+	System.out.printf("\nMost Hours: %16.2f",borrowedMostHours);
+	
+}
+}

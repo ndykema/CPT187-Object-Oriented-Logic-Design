@@ -1,0 +1,106 @@
+package edu.cpt187.lastname.program5;
+
+import java.util.*;
+import java.io.*;
+
+public class ToolKeeper {
+
+	static ArrayList<Tool> toolList = new ArrayList<>();
+
+	public static void loadToolList(String filePath) throws IOException {
+		FileInputStream toolFile = new FileInputStream(filePath);
+		Scanner inputFile = new Scanner(toolFile);
+
+		while (inputFile.hasNext()) {
+			String tool = inputFile.next();
+			boolean availability = inputFile.nextBoolean();
+			String owner = inputFile.next();
+			Tool entry = new Tool(tool, availability, owner);
+			toolList.add(entry);
+		}
+		inputFile.close();
+	}
+
+	public int getNumTools() {
+		return toolList.size();
+	}
+
+	public static Tool findToolByName(String searchInput) {
+		int mid = 0;
+		int first = 0;
+		int last = toolList.size() - 1;
+		String string1 = "powerwasher";
+		Tool searchedTool = null;
+		boolean exists = false;
+		boolean doesNotExist = false;
+		int position = 0;
+
+		while (exists == false && first <= last)
+
+		{
+			mid = (first + last) / 2;
+			if (toolList.get(mid).getToolName().compareToIgnoreCase(searchInput) == 0) {
+				exists = true;
+				position = mid;
+			} else if (toolList.get(mid).getToolName().compareToIgnoreCase(searchInput) < 0) {
+				first = (mid + 1);
+			} else {
+				last = mid - 1;
+			}
+
+		}
+		if (exists == true) {
+			searchedTool = toolList.get(position);
+		} else {
+			searchedTool = null;
+		}
+
+		return searchedTool;
+	}
+
+	public static void addTool(Tool toolInput) {
+		toolList.add(toolInput);
+	}
+
+	public static void removeTool(Tool toolInput) {
+		toolList.remove(toolInput);
+	}
+
+	public static ArrayList<Tool> getToolList() {
+		return toolList;
+	}
+	
+public static void sortToolList(String searchInput, Tool toolInput) {
+	int mid = 0;
+	int first = 0;
+	int last = toolList.size() - 1;
+	String string1 = "powerwasher";
+	Tool searchedTool = null;
+	boolean exists = false;
+	boolean doesNotExist = false;
+	int position = 0;
+	int newToolPos = 0;
+
+	while (exists == false && first <= last)
+
+	{
+		mid = (first + last) / 2;
+		if (toolList.get(mid).getToolName().compareToIgnoreCase(searchInput) == 0) {
+			exists = true;
+			position = mid;
+		} else if (toolList.get(mid).getToolName().compareToIgnoreCase(searchInput) < 0) {
+			first = (mid + 1);
+		} else {
+			last = mid - 1;
+		}
+System.out.println(mid);
+System.out.println(newToolPos);
+System.out.println(first);
+System.out.println(last);
+newToolPos = mid+1;
+	}
+	toolList.add(newToolPos, toolInput);
+
+	
+}
+}

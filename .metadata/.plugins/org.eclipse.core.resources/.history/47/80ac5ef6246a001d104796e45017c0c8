@@ -1,0 +1,120 @@
+package edu.cpt187.lastname.program5;
+import java.util.*;
+import java.io.*;
+public class MainClass {
+	public static final String FILE_PATH = "ToolFile.txt";
+
+
+	public static void main(String[] args) throws IOException {
+		Scanner input = new Scanner(System.in);
+char menuSelection;
+Tool tool;
+
+ToolKeeper.loadToolList(FILE_PATH);
+tool = searchTool(input);
+System.out.print(tool.getToolName);
+//menuSelection = getValidMenuSelection(input);
+
+		//while(menuSelection!='Q')
+		//{
+		//	if (menuSelection == 'A')
+			//{
+			//	searchTool(input);
+			//}
+			//else if (menuSelection =='B')
+			//{
+			//	displayToolList();
+			//}
+		//	else if (menuSelection =='C')
+			//{
+			//	addTool(input);
+			//}
+			//else if (menuSelection =='D')
+			//{
+			//	removeTool(input);
+			//}
+	//menuSelection = getValidMenuSelection(input);
+	//}
+
+	
+	}
+	public static void displayMenu()
+	{
+		System.out.println("\tWelcome to the Tool Keeper Program");
+		System.out.println("\n\tPlease Select an option from the Menu Below\n");
+		System.out.println("\t\tA.) Check Tool Availability");
+		System.out.println("\t\tB.) Display List of Tools");
+		System.out.println("\t\tC.) Add a Tool to the Tool List");
+		System.out.println("\t\tD.) Remove a Tool from the Tool List");
+		System.out.println("\t\tQ.) Quit Program");
+	}
+	
+	public static char getValidMenuSelection(Scanner borrowedInput)
+	{
+		char selection;
+		displayMenu();
+		selection = borrowedInput.next().toUpperCase().charAt(0);
+		while (selection != 'A' && selection != 'B' && selection != 'Q'&& selection != 'C'&& selection != 'D') {
+			System.out.println("\t  Please enter a valid selection!\n\t\t Example input: A");
+			selection = borrowedInput.next().toUpperCase().charAt(0);
+		}
+		return selection;
+	}
+	
+	public static void addTool(Scanner borrowedInput)
+	{
+		String toolName;
+		String toolOwner;
+		System.out.println("Please enter the name of the tool you wish to add to the Tool List!");
+		toolName = borrowedInput.nextLine().toLowerCase();
+		
+		System.out.println("Please enter the owner of the tool! Example:Chad");
+		toolOwner = borrowedInput.nextLine();
+		Tool customTool = new Tool(toolName, toolOwner);
+		ToolKeeper.addTool(customTool);
+		
+		System.out.printf("You added %s to the Tool List!", toolName);
+	
+	}
+	
+	public static Tool searchTool(Scanner borrowedInput) 
+	{ 	
+		String searchedTool;
+		Tool tool;
+		System.out.println("Please enter the name of the tool you are looking for!");
+		System.out.println("NOTE: If there are spaces in your tool name, use a hypen instead!!");
+		searchedTool = borrowedInput.next().toLowerCase();
+		tool = ToolKeeper.findToolByName(searchedTool);
+		System.out.print(tool);
+		return tool;
+	}
+	
+	public static void removeTool(Scanner borrowedInput) 
+	{ 	Tool discardedTool;
+		String toolName;
+		System.out.println("Please enter the tool you would like to remove from the Tool List!");
+		toolName = borrowedInput.nextLine();
+		discardedTool = ToolKeeper.findToolByName(toolName);
+		ToolKeeper.removeTool(discardedTool);
+		
+		System.out.printf("You removed %s from the Tool List",discardedTool);
+	}
+	
+	public static void displayToolList()
+	{
+		 ArrayList<Tool> nameList = ToolKeeper.getToolList();
+		for (int i = 0; i<nameList.size();i++) {
+			System.out.print(nameList.get(i).getToolName()+" ");
+			System.out.print(nameList.get(i).getToolAvailability()+" ");
+			System.out.println(nameList.get(i).getOwnerName());
+		}
+	}
+	
+	}
+
+		
+					
+	
+
+
+	

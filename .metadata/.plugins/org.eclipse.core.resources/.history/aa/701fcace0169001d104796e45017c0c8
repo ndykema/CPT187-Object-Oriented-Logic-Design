@@ -1,0 +1,34 @@
+package edu.cpt187.lastname.program5;
+import java.util.*;
+import java.io.*;
+public class MainClass {
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		String name1 = "Amy";
+		String name2 = "Bethany";
+		String name3 = "Courtney";
+		ArrayList <String> nameList = new ArrayList<>();
+		
+	nameList.add(name3);
+	nameList.add(name1);
+	nameList.add(name2);
+	
+	for(int i=0; i<nameList.size();i++) {
+		int index(i+1);
+	if(nameList.get(i).compareToIgnoreCase(nameList.get(index))>0) {
+		String user = nameList.get(2);
+		nameList.set(1, user);
+	}
+	System.out.println(nameList);
+		
+	}
+	}
+		
+					
+	}
+
+
+	

@@ -1,0 +1,61 @@
+package edu.cpt187.dykema.program4;
+
+import java.io.*;
+import java.util.*;
+
+public class MainClass {
+	public static String FILE_PATH = "Grades.txt";
+	
+	public static void main(String[] args) throws IOException {
+		int numStudents = 10;
+		int numGrades = 7;
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner (fileGrades);
+		
+		//readFileTitle();
+		//readNames(numStudents,numGrades);
+		readGrades(numGrades);
+		//while (Grades.hasNext())
+		//{
+		//	String line = Grades.nextLine();
+		//	System.out.println(line);
+		//}
+	
+		Grades.close();
+		
+		
+	}
+	public static void readFileTitle() throws FileNotFoundException
+	{
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(fileGrades);
+		String title = Grades.nextLine();
+		System.out.println(title);
+		Grades.close();
+	}
+	public static void readNames(int numStudents,int numGrades) throws FileNotFoundException
+	{
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(fileGrades);
+		String[] studentNames = new String [numStudents];
+		Grades.nextLine();
+		for(int i=0; i<numStudents; i++) {
+		studentNames[i] = Grades.next();
+		Grades.nextLine();	
+		System.out.printf("%s\n",studentNames[i]);
+		}
+	}
+	public static void readGrades(int numGrades) throws FileNotFoundException
+	{
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(fileGrades);
+		Grades.nextLine();
+	for (int i = 0; i<numGrades;i++) 
+	{
+		double gradeTally;
+		System.out.println(Grades.nextInt());
+	}
+	}
+	
+	}
+

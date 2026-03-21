@@ -1,0 +1,139 @@
+package edu.cpt187.dykema.program2;
+
+import java.util.Scanner;
+
+public class DemoConstruction {
+	public static final int BEDROOM_PLAN_A = 2;
+	public static final int BEDROOM_PLAN_B = 3;
+	public static final int BEDROOM_PLAN_C = 4;
+	public static final String NAME_PLAN_A = "Ashley";
+	public static final String NAME_PLAN_B = "Cooper";
+	public static final String NAME_PLAN_C = "Charleston";
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		final char[] HOUSE_SELECTION = {'A','B','C'};
+		final String[] HOUSE_NAMES = {"Ashley","Cooper","Charleston"};
+		final int[] HOUSE_BEDS = {2,3,4};
+		final char QUIT_SELECTION = 'Q';
+		final String QUIT_DESCRIPTION = "Quit Demo Tool";
+		char	housingMenuSelect;
+		String  namePlan=null;
+		int bedroomPlan = 0;
+		int numBathrooms=0;
+		
+		Scanner input = new Scanner(System.in);
+		
+		
+		displayWelcomeMessage();
+	
+	
+		housingMenuSelect = getHousingSelection(input,HOUSE_SELECTION, HOUSE_NAMES,HOUSE_BEDS,QUIT_SELECTION,QUIT_DESCRIPTION);
+	
+	while (housingMenuSelect != 'Q')
+	{
+		House demoHouse;
+		if (housingMenuSelect == 'A')
+		{
+			bedroomPlan = BEDROOM_PLAN_A;
+			namePlan = NAME_PLAN_A;
+		}
+		else if (housingMenuSelect == 'B')
+		{
+			bedroomPlan = BEDROOM_PLAN_B;
+			namePlan = NAME_PLAN_B;
+		}
+		else if (housingMenuSelect == 'C')
+		{
+			bedroomPlan = BEDROOM_PLAN_C;
+			namePlan = NAME_PLAN_C;
+		}
+		
+		numBathrooms = getValidBathroomCount(input,bedroomPlan,namePlan);
+		
+		demoHouse = new House(namePlan,bedroomPlan,numBathrooms);
+		
+		displayFinalReport(demoHouse);
+		
+		housingMenuSelect = getHousingSelection(input,HOUSE_SELECTION, HOUSE_NAMES,HOUSE_BEDS,QUIT_SELECTION,QUIT_DESCRIPTION);
+	}
+		
+	}
+	
+	
+	
+//Method Development Past Here
+public static void displayWelcomeMessage()
+{
+	System.out.println("\t\tWelcome to Spike's Construction Demo Tool!\n\t\t  Are you ready to build your dream home?");
+}
+
+public static void displayHouseMenu(char[]HOUSE_SELECTION, String[]HOUSE_NAMES, int[]HOUSE_BEDS,char QUIT_SELECTION,String QUIT_DESCRIPTION)
+{
+	System.out.println("\n\t --------------------------------------------------------");
+	System.out.println("\n\t\t\t    Housing Options\n");
+	System.out.println("\t\t  Option:\t\t    Number of Beds");
+	for (int i=0;i < HOUSE_SELECTION.length; i++) {
+		System.out.printf("\t\t%3c.)%-15s%22d\n",HOUSE_SELECTION[i],HOUSE_NAMES[i],HOUSE_BEDS[i]);
+	}
+	System.out.printf("\t\t%3c.)%-15s",QUIT_SELECTION,QUIT_DESCRIPTION);
+	System.out.println("\n\n\t\tPlease select a housing option! Ex.(A,B,C,Q)");
+	System.out.println("\n\t --------------------------------------------------------");
+}
+
+public static char getHousingSelection(Scanner borrowedInput,char[]HOUSE_SELECTION,String[]HOUSE_NAMES,int[]HOUSE_BEDS,char QUIT_SELECTION,String QUIT_DESCRIPTION) 
+{
+displayHouseMenu(HOUSE_SELECTION,HOUSE_NAMES,HOUSE_BEDS,QUIT_SELECTION,QUIT_DESCRIPTION);
+char menuSelection = borrowedInput.next().toUpperCase().charAt(0);
+
+while(menuSelection != 'A'&& menuSelection != 'B' && menuSelection != 'C' && menuSelection != 'Q')
+	{
+		System.out.println("\t\t\tPlease enter a valid selection!\n\t\t\t Example input: A");
+		menuSelection = borrowedInput.next().toUpperCase().charAt(0);
+	}
+
+return menuSelection;
+}
+
+public static int getValidBathroomCount(Scanner borrowedInput,int borrowedBedroomPlan, String borrowedNamePlan)
+{
+	System.out.printf("\tHow many bathrooms would you like installed in your %s home?\n",borrowedNamePlan);
+	int bathroomNumber = borrowedInput.nextInt();
+	
+	while (bathroomNumber > borrowedBedroomPlan) 
+	{
+		System.out.println("  ***You have entered too many bathrooms for the floorplan that you have selected!***");
+		System.out.printf("\n\t  According to the %s floorplan, you have %d bedrooms.",borrowedNamePlan,borrowedBedroomPlan);
+		System.out.println("\n\t    ---You cannot have more bathrooms than bedrooms---\n\t         Please enter a valid number of bathrooms!");
+		bathroomNumber = borrowedInput.nextInt();
+	}
+	System.out.println("\t    Thank you for selecting your desired number of bathrooms!");
+	return bathroomNumber;
+	
+	
+	
+}
+
+public static void displayFinalReport(House demoHouse)
+{
+	System.out.println("\n\n\t                     ~~~~~~~~~~~~~~~~~~");
+	System.out.println("\t                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	System.out.println("\t           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	System.out.println("\t       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	System.out.println("\t   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	System.out.println("\t   |        _ _  Custom Dream Home Report  _ _          |");
+	System.out.println("\t   |       |_|_|                          |_|_|         |");
+	System.out.println("\t   |       |_|_|            |---|         |_|_|         |");
+	System.out.println("\t   |                        |   |                       |");
+	System.out.println("\t   |                        |  .|                       |");
+	System.out.println("\t   |                    @ @ |   | @ @                   |");
+	System.out.println("\t   |                    |/  |___| |/                    |");
+	System.out.println("\t   |____________________________________________________|");
+	System.out.println("\n      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	System.out.println("\n      Plan:		Bedrooms:		Bathrooms:		Cost:	 ");
+	System.out.printf("      %-13s%14d%25d%19.2f$\n",demoHouse.getFloorPlan(),demoHouse.getNumBedrooms(),demoHouse.getNumBathrooms(),demoHouse.totalMaterialCost());
+	System.out.println("\n      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n\n");
+}
+
+
+}

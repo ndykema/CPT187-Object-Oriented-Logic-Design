@@ -1,0 +1,58 @@
+package edu.cpt187.dykema.program3;
+
+import java.util.Random;
+
+public class AnalysisTracker {
+	public static final String EMPLOYEE_NAME = "Mark";
+	public static final double EMPLOYEE_SALARY = 35.50;
+	public static final int NUM_WEEKS = 5;
+	public static final int ZERO = 0;
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int min = 40;
+		int max = 50;
+		int hours = 0;
+
+		Employee employee = new Employee(EMPLOYEE_NAME, EMPLOYEE_SALARY, NUM_WEEKS);
+
+		for (int i = ZERO; i < employee.getTotalWeeks();) {
+			hours = generateRandomHours(min, max);
+			employee.setHoursForWeek(i, hours);
+			i++;
+		}
+
+		generateReport(employee.getName(), employee.getTotalWeeks(), employee.calculateTotalPay(),
+				employee.calculateAveragePay(), employee.calculateTotalHours(), employee.calculateAverageHours(),
+				employee.findMinWeekIndex(), employee.findMaxWeekIndex());
+
+	}
+
+	static Random rand = new Random();
+
+	static public int generateRandomHours(int min, int max) {
+		int number;
+		number = rand.nextInt(max - min);
+		number += min;
+		if (number <= ZERO)
+		{
+			System.out.println("There is an error in your Random Hour generator!");
+		}
+		return number;
+	}
+
+	static public void generateReport(String borrowedName, int borrowedTotalWeeks, double borrowedTotalPay,
+			double borrowedAvgPay, double borrowedTotalHours, double borrowedAverageHours, double borrowedLeastHours,
+			double borrowedMostHours) {
+		System.out.println("EMPLOYEE REPORT");
+		System.out.printf("Employee Name: %15s\n", borrowedName);
+		System.out.printf("Total Weeks Worked: %10d\n", borrowedTotalWeeks);
+		System.out.printf("\nTotal Pay: %19.2f", borrowedTotalPay);
+		System.out.printf("\nAverage Pay: %17.2f\n", borrowedAvgPay);
+		System.out.printf("\nTotal Hours: %17.2f", borrowedTotalHours);
+		System.out.printf("\nAverage Hours: %15.2f ", borrowedAverageHours);
+		System.out.printf("\nLeast Hours: %17.2f", borrowedLeastHours);
+		System.out.printf("\nMost Hours: %18.2f\n\n\n", borrowedMostHours);
+
+	}
+}

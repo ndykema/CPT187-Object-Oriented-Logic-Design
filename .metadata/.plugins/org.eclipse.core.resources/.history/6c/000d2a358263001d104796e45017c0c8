@@ -1,0 +1,24 @@
+package edu.cpt187.dykema.program4;
+
+import java.util.*;
+import java.io.*;
+
+public class ClassRoom {
+	public String courseName;
+	public String[] studentNames;
+	public double[] studentGrades;
+	int numStudents;
+	double numGrades = 7;
+	String name;
+	Double grades;
+	public void loadGrades(String FILE_PATH) throws IOException {
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner (fileGrades);
+		//name then 7 grades
+		while (Grades.hasNext()) 
+		{
+			String studentNames = Grades.next();
+			double studentGrades = Grades.nextDouble();
+
+	
+}

@@ -1,0 +1,121 @@
+package edu.cpt187.dykema.program4;
+
+import java.util.*;
+import java.io.*;
+
+public class ClassRoom {
+	public String courseName;
+	public String[] studentNames;
+	public double[] studentGrades;
+	int numStudents=10;
+	int numGrades;
+
+	public static final int ZERO = 0;
+	
+	ClassRoom(String FILE_PATH) throws IOException
+	{
+		this.numStudents = getNumberOfStudents(FILE_PATH);
+		this.numGrades = getNumberOfGrades(FILE_PATH);
+		this.studentNames = getStudentNames(FILE_PATH);
+		//this.studentGrades = getStudentGrades(FILE_PATH);
+	}
+		
+
+	public void loadGrades(String FILE_PATH) throws FileNotFoundException
+	{
+		FileInputStream File = new FileInputStream(FILE_PATH);
+		Scanner Title = new Scanner(File);
+		courseName = Title.nextLine();
+		Title.close();
+
+	}
+	
+	public static int getNumberOfStudents(String FILE_PATH) throws IOException 
+	{
+		int numberOfStudents=ZERO;
+		FileInputStream File = new FileInputStream(FILE_PATH);
+		Scanner dataFile = new Scanner (File);
+		dataFile.nextLine();
+			while(dataFile.hasNextLine()) 
+			{
+				dataFile.nextLine();
+				numberOfStudents++;
+			}
+			dataFile.close();
+			return numberOfStudents;	
+	}
+	public static int getNumberOfGrades(String FILE_PATH) throws IOException
+	{
+		int number =ZERO;
+		int numberOfGrades=ZERO;
+		FileInputStream File = new FileInputStream(FILE_PATH);
+		Scanner dataFile = new Scanner (File);
+		dataFile.nextLine();
+		dataFile.next();
+			while(dataFile.hasNextInt())
+			{
+				dataFile.nextInt();
+				number++;
+			}
+		dataFile.close();
+		numberOfGrades = number;
+		return numberOfGrades;
+	}
+	
+	public  String[] getStudentNames(String FILE_PATH) throws IOException
+	{
+		FileInputStream nameFile = new FileInputStream(FILE_PATH);
+		Scanner Names = new Scanner(nameFile);
+		String[] studentClassRole = new String[numStudents];
+		Names.nextLine();
+		for (int i = ZERO; i < numStudents; i++) 
+		{
+			studentClassRole[i] = Names.next();
+			Names.nextLine();
+		}
+		Names.close();
+		return studentClassRole;
+	}
+	
+	public double[] getStudentGrades(String FILE_PATH) throws IOException
+	{
+	int numberOfStudents = getNumberOfStudents(FILE_PATH);
+	FileInputStream gradeFile = new FileInputStream(FILE_PATH);
+	Scanner Grades = new Scanner(gradeFile);
+	double[] calculatedGrades = new double[numGrades];
+	while (Grades.hasNext()) 
+	{ 
+		int Exam = ZERO;
+			for (int a = ZERO; a<numberOfStudents; a++)
+				
+			{
+					int i=ZERO;
+					Grades.nextLine();
+					Grades.next();
+					double gradeTally=ZERO;
+					for (i = 0; i < numGrades; i++) 
+					{	
+						int number;
+						number = Grades.nextInt();
+						if (i == numGrades) 
+						{
+							Exam = number * 3;
+							gradeTally += number;
+						} 
+						else if (i < numGrades) 
+						{
+							gradeTally += number;
+						}
+						System.out.println(gradeTally);
+					}
+					gradeTally += Exam;
+					double averageGrade = gradeTally / 10;
+					calculatedGrades[a]=averageGrade;	
+			}
+	}
+	Grades.close();
+	return calculatedGrades;
+	}
+}
+
+

@@ -1,0 +1,37 @@
+package edu.cpt187.dykema.program4;
+
+import java.util.*;
+import java.io.*;
+
+public class ClassRoom {
+	public String courseName;
+	public String[] studentNames;
+	public double[] studentGrades;
+	int numStudents;
+	double numGrades = 7;
+
+	ClassRoom(int numGrades, int numStudents)
+	{
+		studentGrades = new double[numGrades];
+		studentNames = new String[numStudents];
+		
+	}
+	
+	public void loadGrades(String filePath) throws IOException {
+		File gradeFile = new File(filePath);
+		if (!gradeFile.exists()) {
+			System.out.println("The File name that you entered does not exist");
+		}
+		Scanner Grades = new Scanner(gradeFile);
+		courseName = Grades.nextLine();
+		while (Grades.hasNextInt()) 
+		{
+
+			int num = Grades.nextInt();
+			System.out.println(num);
+		}
+		Grades.close();
+		
+	}
+
+}

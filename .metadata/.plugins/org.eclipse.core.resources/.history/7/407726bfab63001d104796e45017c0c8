@@ -1,0 +1,108 @@
+package edu.cpt187.dykema.program4;
+
+import java.util.*;
+import java.io.*;
+
+public class ClassRoom {
+	public String courseName;
+	public String[] studentNames;
+	public double[] studentGrades;
+	int numStudents;
+	int numGrades;
+
+	public static final int ZERO = 0;
+	
+	ClassRoom(String FILE_PATH) throws IOException
+	{
+		numStudents = getNumberOfStudents(FILE_PATH);
+		numGrades = getNumberOfGrades(FILE_PATH);
+	}
+
+	public void loadGrades(String FILE_PATH) throws FileNotFoundException
+	{
+		FileInputStream File = new FileInputStream(FILE_PATH);
+		Scanner Title = new Scanner(File);
+		courseName = Title.nextLine();
+		Title.close();
+		
+		//By opening and closing the file, I reset the location of the "reader" making it easier to 
+		//filter for the information I am looking for. I am not sure if there is a better way to do
+		//this...Opening and Closing DEFINITELY feels inefficient.
+		FileInputStream nameFile = new FileInputStream(FILE_PATH);
+		Scanner Names = new Scanner(nameFile);
+		Names.nextLine();
+		for (int i = ZERO; i < numStudents; i++) 
+		{
+			this.studentNames[i] = Names.next();
+			Names.nextLine();
+		}
+		Names.close();
+		
+		//I found it easier to break up the filtering into two separate instances of filtering, rather 
+		// than doing all of the filtering under one opening of the file.
+		//I am sure that there is a WAY more efficient way to do this, but I couldn't really figure out
+		//how to do it efficiently.
+		FileInputStream gradeFile = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(gradeFile);
+		while (Grades.hasNext()) 
+		{ 
+			int Exam = ZERO;
+			int number;
+				for (int a = ZERO; a<numStudents; a++)
+					
+				{
+						int i=ZERO;
+						double gradeTally=ZERO;
+						Grades.nextLine();
+						Grades.next();
+						for (i = 0; i < numGrades; i++) {
+							number = Grades.nextInt();
+							if (i == 7) 
+							{
+								Exam = number * 3;
+								gradeTally += number;
+							} 
+							else if (i < 6) 
+							{
+								gradeTally += number;
+							}
+						}
+						gradeTally += Exam;
+						double averageGrade = gradeTally / 10;
+						studentGrades[a]=averageGrade;	
+				}
+		}
+		Grades.close();
+	}
+	public static int getNumberOfStudents(String FILE_PATH) throws IOException 
+	{
+		int numberOfStudents=ZERO;
+		FileInputStream File = new FileInputStream(FILE_PATH);
+		Scanner dataFile = new Scanner (File);
+		dataFile.nextLine();
+			while(dataFile.hasNextLine()) 
+			{
+				dataFile.nextLine();
+				numberOfStudents++;
+			}
+			dataFile.close();
+			return numberOfStudents;	
+	}
+	public static int getNumberOfGrades(String FILE_PATH) throws IOException
+	{
+		int numberOfGrades =ZERO;
+		FileInputStream File = new FileInputStream(FILE_PATH);
+		Scanner dataFile = new Scanner (File);
+		dataFile.nextLine();
+		dataFile.next();
+			while(dataFile.hasNextInt())
+			{
+				dataFile.nextInt();
+				numberOfGrades++;
+			}
+		dataFile.close();
+		return numberOfGrades;
+	}
+}
+
+

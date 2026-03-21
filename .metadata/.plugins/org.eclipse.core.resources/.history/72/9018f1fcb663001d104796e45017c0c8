@@ -1,0 +1,143 @@
+package edu.cpt187.dykema.program4;
+
+import java.io.*;
+import java.util.*;
+
+public class MainClass {
+	public static int numStudents = 10;
+	public static String FILE_PATH = "Grades.txt";
+	public static double[] studentGrades = new double[numStudents];
+	public static String[] studentNames = new String[numStudents];
+	public static int ZERO =0;
+	public static String[] menuOptions = {"Student with Highest Grade", "Student with Lowest Grade","Quit"};
+	public static String[] menuSelections = {"A.)","B.)","Q"};
+	public static void main(String[] args) throws IOException {
+		Scanner input = new Scanner(System.in);
+//ClassRoom Class1 = new ClassRoom(FILE_PATH);
+getValidInput(input,menuSelections,menuOptions);
+
+
+	}
+	
+	public static void displayMenu(String[] menuSelections,String[] menuOptions)
+	{
+		System.out.println("      Grade Accessing Program");
+		System.out.println("\n\t***Menu Selection***");
+		for (int i=0; i<menuOptions.length; i++)
+		{
+			System.out.printf("%s: %s\n",menuSelections[i],menuOptions[i]);
+		}
+	}
+	
+	public static void getValidInput(Scanner borrowedInput, String[] menuSelections,String[] menuOptions)
+	{
+		displayMenu(menuSelections,menuOptions);
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("Please make a selection!");
+		char menuSelection = borrowedInput.next().toUpperCase().charAt(0); 
+		while (menuSelection != 'A' && menuSelection != 'B' && menuSelection != 'Q') 
+		{
+			System.out.println("     Please enter a valid selection!\n\t\t Example input: A");
+			menuSelection = borrowedInput.next().toUpperCase().charAt(0);
+		}
+	
+	}
+
+	public static int getNumberOfStudents(String FILE_PATH) throws IOException
+	{
+		int numberOfStudents=ZERO;
+		FileInputStream File = new FileInputStream(FILE_PATH);
+		Scanner dataFile = new Scanner (File);
+		dataFile.nextLine();
+		while(dataFile.hasNextLine()) 
+		{
+			dataFile.nextLine();
+			numberOfStudents++;
+		}
+		File.close();
+		return numberOfStudents;
+	}
+	
+	public static int getNumberOfGrades(String FILE_PATH) throws IOException
+	{
+		int numberOfGrades =ZERO;
+		FileInputStream File = new FileInputStream(FILE_PATH);
+		Scanner dataFile = new Scanner (File);
+		dataFile.nextLine();
+		dataFile.next();
+		while(dataFile.hasNextInt())
+		{
+			dataFile.nextInt();
+			numberOfGrades++;
+			System.out.print(numberOfGrades);
+		}
+		File.close();
+		return numberOfGrades;
+	}
+	
+	public static void readFileTitle() throws FileNotFoundException {
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(fileGrades);
+		String title = Grades.nextLine();
+		System.out.println(title);
+		Grades.close();
+	}
+
+	public static void readNames(int numStudents, int numGrades) throws FileNotFoundException {
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+		Scanner Grades = new Scanner(fileGrades);
+		Grades.nextLine();
+		for (int i = 0; i < numStudents; i++) {
+			studentNames[i] = Grades.next();
+			Grades.nextLine();
+		}
+	}
+
+	public static void readGrades(int numGrades, int numStudents) throws FileNotFoundException {
+	
+		FileInputStream fileGrades = new FileInputStream(FILE_PATH);
+
+		Scanner Grades = new Scanner(fileGrades);
+		while (Grades.hasNext()) 
+		{ 
+			int Exam = 0;
+				for (int a = 0; a<numStudents; a++)
+					
+				{
+					int i=0;
+						Grades.nextLine();
+						Grades.next();
+						double gradeTally =0;
+						for (i = 0; i < numGrades; i++) {
+							int number;
+							number = Grades.nextInt();
+							if (i == 7) 
+							{
+								Exam = number * 3;
+								gradeTally += number;
+							} 
+							else if (i < 6) 
+							{
+								gradeTally += number;
+							}
+						}
+						gradeTally += Exam;
+						double averageGrade = gradeTally / 10;
+						studentGrades[a]=averageGrade;	
+				}
+		}
+	}
+
+	public static void displayStudent(int numStudents, int numGrades) throws FileNotFoundException
+	{
+		readNames(numStudents,numGrades);
+		readGrades(numGrades,numStudents);
+		readFileTitle();
+		for (int i=0; i<numStudents; i++)
+		{
+			
+			System.out.printf("Student Name: %-15s  Grade: %.1f\n",studentNames[i],studentGrades[i]);
+		}
+	}
+}

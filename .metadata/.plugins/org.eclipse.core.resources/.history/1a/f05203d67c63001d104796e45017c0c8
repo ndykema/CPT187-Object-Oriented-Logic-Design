@@ -1,0 +1,24 @@
+package edu.cpt187.dykema.program4;
+
+import java.io.*;
+import java.io.IOException;
+import java.util.*;
+
+public class MainClass {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+
+		String filePath = "DykemaProgram4/src/Grades.txt";
+		//int numGrades = 7;
+		//int numStudents = 10;
+				
+		
+		//ClassRoom Class1 = new ClassRoom (numGrades, numStudents);
+		
+		//Class1.loadGrades(filePath);
+		File gradeFile = new File (filePath);
+		Scanner Grades = new Scanner( new FileInputStream (filePath));
+	}
+
+}

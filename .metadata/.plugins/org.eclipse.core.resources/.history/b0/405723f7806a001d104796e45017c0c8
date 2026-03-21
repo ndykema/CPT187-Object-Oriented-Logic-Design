@@ -1,0 +1,161 @@
+package edu.cpt187.lastname.program5;
+import java.util.*;
+import java.io.*;
+public class MainClass {
+	public static final String FILE_PATH = "ToolFile.txt";
+
+
+	public static void main(String[] args) throws IOException {
+		Scanner input = new Scanner(System.in);
+char menuSelection;
+Tool tool;
+
+ToolKeeper.loadToolList(FILE_PATH);
+
+menuSelection = getValidMenuSelection(input);
+
+		while(menuSelection!='Q')
+		{
+			if (menuSelection == 'A')
+			{
+				displaySingleTool(searchTool(input));
+			}
+			else if (menuSelection =='B')
+			{
+				displayToolList();
+			}
+			else if (menuSelection =='C')
+			{
+				addTool(input);
+			}
+			else if (menuSelection =='D')
+			{
+				removeTool(input);
+			}
+			else if (menuSelection =='E')
+			{
+				checkToolOut(input);
+			}
+			//else if (menuSelection == 'F')
+			//{
+				//returnTool();
+			//}
+ menuSelection = getValidMenuSelection(input);
+	}
+
+	
+	}
+	public static void displayMenu()
+	{
+		System.out.println("\tWelcome to the Tool Keeper Program");
+		System.out.println("\n\tPlease Select an option from the Menu Below\n");
+		System.out.println("\t\tA.) Check Tool Existance");
+		System.out.println("\t\tB.) Display List of Tools");
+		System.out.println("\t\tC.) Add a Tool to the Tool List");
+		System.out.println("\t\tD.) Remove a Tool from the Tool List");
+		System.out.println("\t\tE.) Check out a Tool from Inventory");
+		System.out.println("\t\tQ.) Quit Program");
+	}
+	
+	public static char getValidMenuSelection(Scanner borrowedInput)
+	{
+		char selection;
+		displayMenu();
+		selection = borrowedInput.next().toUpperCase().charAt(0);
+		while (selection != 'A' && selection != 'B' && selection != 'Q'&& selection != 'C'&& selection != 'D' && selection != 'E') {
+			System.out.println("\t  Please enter a valid selection!\n\t\t Example input: A");
+			selection = borrowedInput.next().toUpperCase().charAt(0);
+		}
+		return selection;
+	}
+	
+	public static void addTool(Scanner borrowedInput)
+	{
+		String toolId;
+		String toolOwner;
+		System.out.println("Please enter the name of the tool you wish to add to the Tool List!");
+		toolId = borrowedInput.next().toLowerCase();
+		
+		System.out.println("Please enter the owner of the tool! Example:Chad");
+		toolOwner = borrowedInput.next();
+		Tool customTool = new Tool(toolId, toolOwner);
+		ToolKeeper.sortToolList(toolId, customTool);
+		
+		System.out.printf("You added %s to the Tool List!", toolId);
+	
+	}
+	
+	public static Tool searchTool(Scanner borrowedInput) 
+	{ 	
+		String searchedTool;
+		Tool tool;
+		System.out.println("Please enter the name of the tool you are looking for!");
+		System.out.println("NOTE: If there are spaces in your tool name, use a hypen instead!!");
+		searchedTool = borrowedInput.next().toLowerCase();
+		tool = ToolKeeper.findToolByName(searchedTool);
+		return tool;
+		
+	}
+	
+	public static void removeTool(Scanner borrowedInput) 
+	{ 	Tool discardedTool;
+		String toolName;
+		System.out.println("Please enter the tool you would like to remove from the Tool List!");
+		toolName = borrowedInput.next();
+		discardedTool = ToolKeeper.findToolByName(toolName);
+		ToolKeeper.removeTool(discardedTool);
+		
+		System.out.printf("You removed %s from the Tool List",toolName);
+	}
+	
+	public static void displayToolList()
+	{
+		 ArrayList<Tool> nameList = ToolKeeper.getToolList();
+		for (int i = 0; i<nameList.size();i++) {
+			System.out.print(nameList.get(i).getToolName()+" ");
+			System.out.print(nameList.get(i).getToolAvailability()+" ");
+			System.out.println(nameList.get(i).getOwnerName());
+		}
+		System.out.println("\n");
+	}
+	public static void displaySingleTool(Tool toolInput)
+	{
+		if (toolInput == null) 
+		{
+			System.out.println("\tThe tool you are looking for does not exist in the Tool List!\n\n");
+		}
+		else {
+		System.out.print("\nTool:"+toolInput.getToolName()+" ");
+		System.out.println("	Tool Owner:"+toolInput.getOwnerName()+"\n");
+		
+		if (toolInput.getToolAvailability()==false) {
+			System.out.println("This tool is NOT available.\n\n");
+		}
+		else {
+			System.out.println("This tool is available\n\n");
+		}
+		}
+		
+	}
+	public static void checkToolOut(Scanner borrowedInput) 
+	{
+		boolean availability = false;
+		Tool toolInput = searchTool(borrowedInput);
+		displaySingleTool(searchTool(borrowedInput));
+		
+		if (toolInput.getToolAvailability()==false) {
+			System.out.println("This tool is unable to be checked out as it is not currently in inventory");
+		}
+		else if (toolInput.getToolAvailability()==true) {
+			toolInput.setToolAvailability(availability);
+			System.out.printf("You have checked out %s from the Tool List",borrowedInput);
+		}
+	}
+	}
+
+		
+					
+	
+
+
+	

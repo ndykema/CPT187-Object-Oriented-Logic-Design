@@ -1,0 +1,111 @@
+package edu.cpt187.dykema.program3;
+
+public class Employee {
+private final int DEFAULT_WEEKS = 52;
+private String name;
+private double salary;
+private double[] weeklyHours;
+
+Employee(String name, double salary){
+this.name = name;
+this.salary = salary;
+weeklyHours = new double[DEFAULT_WEEKS];
+}
+
+Employee(String name, double salary, int numWeeks){
+this.name = name;
+this.salary = salary;
+weeklyHours = new double[numWeeks];
+}
+
+public String getName()
+{
+	return name;
+}
+
+public double getSalary()
+{
+	return salary;
+}
+
+public int getTotalWeeks()
+{
+	return weeklyHours.length;
+}
+
+public void setHoursForWeek(int whichWeek,double hours)
+{
+	weeklyHours[whichWeek] = hours;
+}
+
+public double getHoursForWeek(int whichWeek)
+{
+	return weeklyHours[whichWeek];
+}
+public double getPayForWeek(int whichWeek)
+{
+	double hours;
+	double pay;
+	hours = weeklyHours[whichWeek];
+	pay = hours*salary;
+	return pay;
+}
+public double calculateAveragePay()
+{
+	double averagePay = calculateTotalPay()/weeklyHours.length;
+	return averagePay;
+}
+public double calculateAverageHours()
+{
+	double hours=0;
+	for(int i=0; i < weeklyHours.length; i++)
+	{hours =+ weeklyHours[i];}
+	double averageHours = hours/weeklyHours.length;
+	return averageHours;
+}
+
+public double calculateTotalPay()
+{
+	double totalPay=0;
+	for (int i=0; i<weeklyHours.length; i++)
+		{totalPay =+ getPayForWeek(i);}
+	return totalPay;
+}
+
+public double calculateTotalHours()
+{
+double totalHours=0;
+for(int i=0;i<weeklyHours.length;i++)
+{
+	totalHours=+weeklyHours[i];
+}
+return totalHours;
+}
+
+public double findMinWeekIndex()
+{
+	double lowest = getHoursForWeek(0);
+	for (int i=1; i < weeklyHours.length; i++)
+	{
+		if (getHoursForWeek(i)<lowest)
+		{
+		lowest = weeklyHours[i];	
+		}
+	}
+	return lowest;
+}
+
+public double findMaxWeekIndex()
+{
+	double highest = getHoursForWeek(0);
+	for (int i=1; i < weeklyHours.length; i++)
+	{
+		if (getHoursForWeek(i)>highest)
+		{
+		highest = weeklyHours[i];	
+		}
+	}
+	return highest;
+}
+
+}

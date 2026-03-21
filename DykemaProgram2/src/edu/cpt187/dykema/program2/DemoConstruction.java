@@ -1,0 +1,181 @@
+//NathanDykema
+//CPT187
+//10/31/22
+
+//I really enjoyed writing this program, but I have a ton of questions littered in the comments :D
+//I know you have a bunch of other students to grade, but if you wouldn't mind answering them as best you can, that would be awesome!
+//I am hoping to pursue a career in programming (most likely as I pursue engineering design and systems) at some point, so I am incredibly
+//curious about the different ways to write code and more so how to write it efficiently and as easy to read as possible!
+//Thanks so much for your help :)
+
+package edu.cpt187.dykema.program2;
+
+
+
+import java.util.Scanner; //Import the Scanner Package
+
+public class DemoConstruction {
+	// Declare our public final variables (describing the different plans available)
+	public static final int BEDROOM_PLAN_A = 2;
+	public static final int BEDROOM_PLAN_B = 3;
+	public static final int BEDROOM_PLAN_C = 4;
+	public static final String NAME_PLAN_A = "Ashley";
+	public static final String NAME_PLAN_B = "Cooper";
+	public static final String NAME_PLAN_C = "Charleston";
+	public static final char PLAN_A = 'A';
+	public static final char PLAN_B = 'B';
+	public static final char PLAN_C = 'C';
+	public static void main(String[] args) {
+
+		// Declare the local variables
+
+		// Arrays here are just used for a simpler menu creation
+		final char[] HOUSE_SELECTION = {PLAN_A,PLAN_B,PLAN_C};
+		final String[] HOUSE_NAMES = {NAME_PLAN_A,NAME_PLAN_B,NAME_PLAN_C};
+		final int[] HOUSE_BEDS = {BEDROOM_PLAN_A, BEDROOM_PLAN_B,BEDROOM_PLAN_C};
+		final char QUIT_SELECTION = 'Q';
+		final String QUIT_DESCRIPTION = "Quit Demo Tool";
+
+		// Variables used to hold our selection from the menu
+		char housingMenuSelect;
+		String namePlan = null;
+		int bedroomPlan = 0;
+		int numBathrooms = 0;
+
+		// Enable the keyboard as a scanner for an input
+		Scanner input = new Scanner(System.in);
+
+		// Call the Method for displaying the Welcome Message
+		displayWelcomeMessage();
+
+		// Getting a menu selection from the getHousingSelection Method - will reject
+		// improper inputs
+		housingMenuSelect = getHousingSelection(input, HOUSE_SELECTION, HOUSE_NAMES, HOUSE_BEDS, QUIT_SELECTION,
+				QUIT_DESCRIPTION);
+		// Main Loop for the demoHouse Program
+		while (housingMenuSelect != 'Q') {
+			// establish the demoHouse
+			House demoHouse;
+			// Sorting the menu selection to set the variables that were selected.
+			if (housingMenuSelect == 'A') {
+				bedroomPlan = BEDROOM_PLAN_A;
+				namePlan = NAME_PLAN_A;
+			} else if (housingMenuSelect == 'B') {
+				bedroomPlan = BEDROOM_PLAN_B;
+				namePlan = NAME_PLAN_B;
+			} else if (housingMenuSelect == 'C') {
+				bedroomPlan = BEDROOM_PLAN_C;
+				namePlan = NAME_PLAN_C;
+			}
+
+			//Prompt for the desired number of Bathrooms - I don't know how to make the program where it will only allow
+			//an integer variable as an input. Is there a way to not accept doubles? Without the program stopping 
+			//with an error?
+			numBathrooms = getValidBathroomCount(input, bedroomPlan, namePlan);
+			// build our Object with the variables that we have established.
+			//This is the part where I question the need for the 1st constructor...
+			demoHouse = new House(namePlan, bedroomPlan, numBathrooms);
+			//Is there a way to write this as demoHouse = new House(demoHouse.getFloorPlan(), demoHouse.getNumBedrooms(),demoHouse.getNumBathrooms())??
+			//I feel like that would be a more effective way of doing this - I tried it and it complained about the demoHouse not being initialized.
+			
+			
+			// Send our Object to the displayFinalReport method, and display final report
+			// using the House Class.
+			displayFinalReport(demoHouse);
+
+			// Display the menu and Re-prompt the user for a menu selection
+			housingMenuSelect = getHousingSelection(input, HOUSE_SELECTION, HOUSE_NAMES, HOUSE_BEDS, QUIT_SELECTION,
+					QUIT_DESCRIPTION);
+
+		}
+		// Confirmation Message that the Demo has closed down.
+		System.out.println("END OF DEMO!");
+		input.close();
+	}
+
+//Method Development Past Here
+
+	// Display Welcome Message Method
+	public static void displayWelcomeMessage() {
+		System.out.println(
+				"\t\tWelcome to Spike's Construction Demo Tool!\n\t\t  Are you ready to build your dream home?");
+	}
+
+	// Display Housing Menu Method
+	public static void displayHouseMenu(char[] HOUSE_SELECTION, String[] HOUSE_NAMES, int[] HOUSE_BEDS,
+			char QUIT_SELECTION, String QUIT_DESCRIPTION) {
+		System.out.println("\n\t    --------------------------------------------------------");
+		System.out.println("\n\t\t\t       Housing Options\n");
+		System.out.println("\t\t  Option:\t\t    Number of Beds");
+		for (int i = 0; i < HOUSE_SELECTION.length; i++) {
+			System.out.printf("\t\t   %3c.)%-15s%22d\n", HOUSE_SELECTION[i], HOUSE_NAMES[i], HOUSE_BEDS[i]);
+		}
+		System.out.printf("\t\t   %3c.)%-15s", QUIT_SELECTION, QUIT_DESCRIPTION);
+		System.out.println("\n\n\t\t   Please select a housing option! Ex.(A,B,C,Q)");
+		System.out.println("\n\t    --------------------------------------------------------");
+	}
+
+	// Get User Housing Selection Method
+	public static char getHousingSelection(Scanner borrowedInput, char[] HOUSE_SELECTION, String[] HOUSE_NAMES,
+			int[] HOUSE_BEDS, char QUIT_SELECTION, String QUIT_DESCRIPTION) {
+		displayHouseMenu(HOUSE_SELECTION, HOUSE_NAMES, HOUSE_BEDS, QUIT_SELECTION, QUIT_DESCRIPTION);
+		char menuSelection = borrowedInput.next().toUpperCase().charAt(0);
+
+		while (menuSelection != 'A' && menuSelection != 'B' && menuSelection != 'C' && menuSelection != 'Q') {
+			System.out.println("\t\t\tPlease enter a valid selection!\n\t\t\t Example input: A");
+			menuSelection = borrowedInput.next().toUpperCase().charAt(0);
+		}
+
+		return menuSelection;
+	}
+
+	// Get User Desired Bathroom Number
+	public static int getValidBathroomCount(Scanner borrowedInput, int borrowedBedroomPlan, String borrowedNamePlan) {
+		System.out.printf("\tHow many bathrooms would you like installed in your %s home?\n\t  Please note that Half-Baths are not supported at this time.\n", borrowedNamePlan);
+		int bathroomNumber = borrowedInput.nextInt();
+
+		while ((bathroomNumber > borrowedBedroomPlan) || (bathroomNumber < 1)) {
+			if (bathroomNumber > borrowedBedroomPlan) {
+				System.out.println(
+						"  ***You have entered too many bathrooms for the floorplan that you have selected!***");
+				System.out.printf("\n\t  According to the %s floorplan, you have %d bedrooms.", borrowedNamePlan,
+						borrowedBedroomPlan);
+				System.out.println(
+						"\n\t    ---You cannot have more bathrooms than bedrooms---\n\t         Please enter a valid number of bathrooms!");
+				bathroomNumber = borrowedInput.nextInt();
+			} else {
+				System.out.println("\tYou have entered an invalid number of bathrooms. Please enter a valid number.");
+				bathroomNumber = borrowedInput.nextInt();
+			}
+		}
+		System.out.println("\t    Thank you for selecting your desired number of bathrooms!");
+		return bathroomNumber;
+
+	}
+
+	// Display the Final Report for the Selected Housing Build
+	public static void displayFinalReport(House demoHouse) {
+		//I would LOVE to know if there is a better way to build images like this for Reports
+		System.out.println("\n\n\t                        ~~~~~~~~~~~~~~~~~~");
+		System.out.println("\t                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("\t              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("\t          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("\t      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("\t      |        _ _  Custom Dream Home Report  _ _          |");
+		System.out.println("\t      |       |_|_|                          |_|_|         |");
+		System.out.println("\t      |       |_|_|            |---|         |_|_|         |");
+		System.out.println("\t      |                        |   |                       |");
+		System.out.println("\t      |                        |  .|                       |");
+		System.out.println("\t      |                    @ @ |   | @ @                   |");
+		System.out.println("\t      |                    |/  |___| |/                    |");
+		System.out.println("\t      |____________________________________________________|");
+		System.out.println("\n     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+		System.out.println("     |                                                                        |");
+		System.out.println("     |Plan:		Bedrooms:		Bathrooms:		Cost: |");
+		System.out.printf("     |%-13s%14d%25d%19.2f$|\n", demoHouse.getFloorPlan(), demoHouse.getNumBedrooms(),
+				demoHouse.getNumBathrooms(), demoHouse.totalMaterialCost());
+		System.out.println("     |                                                                        |");
+		System.out.println("     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n\n\n");
+	}
+
+}

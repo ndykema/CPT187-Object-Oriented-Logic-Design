@@ -1,0 +1,72 @@
+package edu.cpt187.dykema.program4;
+
+import java.io.*;
+import java.util.*;
+
+public class MainClass {
+	public static int numStudents = 10;
+	public static String FILE_PATH = "Grades.txt";
+	public static double[] studentGrades = new double[numStudents];
+	public static String[] studentNames = new String[numStudents];
+	public static int ZERO =0;
+	public static String[] menuOptions = {"Student with Highest Grade", "Student with Lowest Grade","Quit"};
+	public static String[] menuSelections = {"A.)","B.)","Q"};
+	public static void main(String[] args) throws IOException {
+		Scanner input = new Scanner(System.in);
+		char menuSelection = 0;
+ClassRoom Class1 = new ClassRoom(FILE_PATH);
+
+menuSelection = getValidInput(input,menuSelections,menuOptions);
+
+System.out.printf("%c",menuSelection);
+	if (menuSelection == 'A')
+	{
+		getMaxGrade(Class1);
+	}
+	else if (menuSelection == 'B')
+	{
+		getMinGrade(Class1);
+	}
+
+
+
+	}
+	
+	public static void displayMenu(String[] menuSelections,String[] menuOptions)
+	{
+		System.out.println("          Grade Accessing Program");
+		System.out.println("\n\t     ***Menu Selection***");
+		for (int i=0; i<menuOptions.length; i++)
+		{
+			System.out.printf("\t%s: %s\n",menuSelections[i],menuOptions[i]);
+		}
+	}
+	
+	public static char getValidInput(Scanner borrowedInput, String[] menuSelections,String[] menuOptions)
+	{
+		displayMenu(menuSelections,menuOptions);
+		char selection = 0;
+		System.out.println("\n\t  Please make a selection!");
+		char menuSelection = borrowedInput.next().toUpperCase().charAt(0); 
+		while (menuSelection != 'A' && menuSelection != 'B' && menuSelection != 'Q') 
+		{
+			System.out.println("\t  Please enter a valid selection!\n\t\t Example input: A");
+			menuSelection = borrowedInput.next().toUpperCase().charAt(0);
+		}
+		return selection;
+	}
+	public static void getMaxGrade(ClassRoom Class1)
+	{
+		int i = Class1.findMaxGrade();
+		System.out.println("The Highest grade is:");
+		System.out.printf("Classmate:%-15s\tGrade:%.1f",Class1.studentNames[i],Class1.studentGrades[i]);
+	}
+	
+	public static void getMinGrade(ClassRoom Class1)
+	{
+		int i = Class1.findMinGrade();
+		System.out.println("The Lowest grade is:");
+		System.out.printf("Classmate:%-15s\tGrade:$.1f",Class1.studentNames[i],Class1.studentGrades[i]);
+	}
+}
+	

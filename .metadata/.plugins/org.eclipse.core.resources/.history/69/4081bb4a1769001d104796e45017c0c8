@@ -1,0 +1,64 @@
+package edu.cpt187.lastname.program5;
+import java.util.*;
+import java.io.*;
+public class MainClass {
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		String name1 = "Amy";
+		String name2 = "Bethany";
+		String name3 = "Courtney";
+		String name4 = "Dylan";
+		String name5 = "Gabby";	
+		String name6 = "Abby";
+		String name7 = "Philip";
+		boolean test = true;
+		ArrayList <String> nameList = new ArrayList<>();
+		
+	nameList.add(name3);
+	nameList.add(name1);
+	nameList.add(name2);
+	nameList.add(name5);
+	nameList.add(name4);
+	nameList.add(name7);
+	nameList.add(name6);
+	
+System.out.println(nameList);
+	String user;
+	String backup;
+//while (test = true) {
+//for (int a = 0; a<(nameList.size()-1);a++){
+for (int i = 0; i<(nameList.size()-1);i++){
+	int index = i+1;
+	if(nameList.get(i).compareToIgnoreCase(nameList.get(index))>0) {
+		user = nameList.get(index);
+		backup = nameList.get(i);
+		nameList.set(i, user);
+		nameList.set(index, backup);
+	
+	}
+	//else if(nameList.get(i).compareToIgnoreCase(nameList.get(index))<0)
+	
+	//{
+	//	user = nameList.get(i);
+	//	backup = nameList.get(index);
+	//}
+	//else
+	//{
+	//	test = false;
+	//}
+	
+	System.out.println(nameList);
+	System.out.println(test);
+	}
+	}
+	}
+	//}
+		
+					
+	
+
+
+	

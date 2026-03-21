@@ -1,0 +1,219 @@
+package edu.cpt187.dykema.program6;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ComputerStore {
+
+		public static void main(String[] args) {
+				Catalog catalog = new Catalog();
+				Scanner keyboard = new Scanner(System.in);
+				ArrayList<Computer> baseModelList = catalog.getBaseModelList();
+				ArrayList<Upgrade> upgradeList = catalog.getUpgradeList();
+				char baseModelSelection;
+				char upgradeSelection;
+				Computer computer;
+				Upgrade upgrade;
+				char mainSelection = 'A';
+				
+				mainSelection = getMainSelection(keyboard);
+				while (mainSelection != 'Q') {
+					if (mainSelection == 'A') {
+						baseModelSelection = getValidatedComputerSelection(keyboard, baseModelList);
+						upgradeSelection = getValidatedUpgradeSelection(keyboard, upgradeList);
+						computer = baseModelFetch(baseModelSelection, baseModelList);
+						upgrade = upgradeFetch(upgradeSelection, upgradeList);
+						Purchase purchase = new Purchase(computer,upgrade);
+						displayPurchaseReport(purchase);
+						purchase.addPurchase(purchase);
+					} 
+					else if (mainSelection == 'B'){
+						catalog.modifyModelPrice(getCustomModEntry(keyboard,catalog,baseModelList),getNewPrice(keyboard));
+					}
+					else if (mainSelection == 'C') {
+						catalog.modifyUpgradePrice(getCustomUpEntry(keyboard,catalog, upgradeList),getNewPrice(keyboard));
+					}
+				
+					mainSelection = getMainSelection(keyboard);
+					
+					//Purchase purchase = new Purchase(baseModelSelection, upgradeSelection);
+				}
+				keyboard.close();
+				// call your method to display the daily report
+			}
+
+			private static char getMainSelection(Scanner keyboard) {
+				char selection;
+				displayMainMenu();
+				selection = keyboard.next().toUpperCase().charAt(0); 
+				while (selection != 'A' && selection != 'B' && selection != 'Q'&& selection != 'C'&& selection != 'D') {
+					System.out.println("Please Make a Valid Menu Selection.");
+					selection = keyboard.next().toUpperCase().charAt(0);
+				}
+		      return selection;
+			}
+			private static Computer baseModelFetch(char baseModelSelection, ArrayList<Computer> baseModelList)
+			{
+				Computer computer = null;
+				if (baseModelSelection == 'A') {
+					computer = baseModelList.get(0);
+				}
+				else if (baseModelSelection == 'B'){
+					computer = baseModelList.get(1);
+				}
+				else if (baseModelSelection == 'C') {
+					computer = baseModelList.get(2);
+				}
+				else {
+					System.out.println("Transaction Cancelled.");	
+				}
+				return computer;
+			}
+			private static Upgrade upgradeFetch(char upgradeSelection, ArrayList<Upgrade> upgradeList) {
+				Upgrade upgrade = null;
+				if (upgradeSelection == 'A') {
+					upgrade = upgradeList.get(0);
+				}
+				else if (upgradeSelection == 'B'){
+					upgrade = upgradeList.get(1);
+				}
+				else if (upgradeSelection == 'C') {
+					upgrade = upgradeList.get(2);
+				}
+				else {
+					System.out.println("No Upgrade Selected.");	
+				}
+				return upgrade;
+			}
+			private static char getValidatedComputerSelection(Scanner keyboard, ArrayList<Computer> modelList) {
+				char selection = 0;
+		        selection = displayComputerMenu(keyboard, modelList);
+		        while (!validateComputerSelection(selection, modelList)) {
+		        	System.out.println("Invalid selection.  Please re-enter your selection.");
+					selection = displayComputerMenu(keyboard, modelList);
+		        }
+				return selection;
+			}
+
+			private static char displayComputerMenu(Scanner input, ArrayList<Computer> modelList) {
+				char selection = 0;
+				char selChar = 'A';
+				System.out.println("Please Select a Model of Computer.\nSelect from the following menu:");
+				for(Computer comp : modelList) {
+					System.out.printf("%c) %-15s%-45s%8.2f%n", selChar, comp.getName(), comp.getDescription(), comp.getPrice());
+					selChar++;
+				}
+				System.out.println("Q) Quit");
+				selection = input.next().charAt(0);
+				return Character.toUpperCase(selection);
+			}
+			
+			private static boolean validateComputerSelection(char selection, ArrayList<Computer> modelList) {
+				boolean isValid = true; // assumption is false
+				int testNdx = selection - 'A';
+				// menu is A,B,C... for each item in the list
+				if (testNdx < 0 || testNdx > modelList.size()) {
+					isValid = false;
+				}
+				return isValid;
+			}
+			
+			private static char getValidatedUpgradeSelection(Scanner input, ArrayList<Upgrade> upgradeList) {
+				char selection = 0;
+		        selection = displayUpgradeMenu(input, upgradeList);
+		        while (!validateUpgradeSelection(selection, upgradeList)) {
+		        	System.out.println("Invalid selection.  Please re-enter your selection.");
+					selection = displayUpgradeMenu(input, upgradeList);
+		        }
+				return selection;
+			}
+
+			private static char displayUpgradeMenu(Scanner input, ArrayList<Upgrade> upgradeList) {
+				char selection = 0;
+				char selChar = 'A';
+				System.out.println("Which upgrade would you like?\n" + 
+								   "Select from the following menu:");
+				for(Upgrade comp : upgradeList) {
+					System.out.printf("%c) %-15s%-45s%8.2f%n", selChar,
+							comp.getName(), comp.getDescription(), comp.getPrice());
+					selChar++;
+				}
+				selection = input.next().charAt(0);
+				return Character.toUpperCase(selection);
+			}
+
+			private static boolean validateUpgradeSelection(char selection, ArrayList<Upgrade> upgradeList) {
+				boolean isValid = true; // assumption is false
+				int testNdx = selection - 'A';
+				// menu is A,B,C... for each item in the list
+				if (testNdx < 0 || testNdx > upgradeList.size()) {
+					isValid = false;
+				}
+				return isValid;
+			}
+			private static void displayMainMenu() {
+				System.out.println("\n\t***Main Menu***\n");
+				System.out.println("A.) Enter Customer Sale");
+				System.out.println("B.) Modify Base Price.");
+				System.out.println("C.) Modify Upgrade Price.");
+				System.out.println("D.) List Sales.");
+				System.out.println("Q.) Quit Program.");
+				System.out.println("\nPlease Make A Menu Selection.");
+			}
+			private static void displayPurchaseReport(Purchase purchase) {
+				System.out.printf("\nModel: %-17s Price :$%5.2f",purchase.getModelName(),purchase.getModelPrice());
+				System.out.printf("\nUpgrade: %-15s Price :$%5.2f", purchase.getUpgradeName(),purchase.getUpgradePrice());
+				System.out.printf("\nTotal Price: $%.2f\n\n", purchase.getTotalPrice());
+			}
+			private static String getCustomModEntry(Scanner keyboard, Catalog catalog, ArrayList<Computer> baseModelList) {
+				int a =65;
+				String modelEntry = null;
+				System.out.println("Please Select the Model you would like to Modify!");
+				for(int i=0; i<baseModelList.size();i++) {
+					System.out.printf("%c.)%s\n",a,baseModelList.get(i).getName());
+					a++;
+				}
+				char modelSelection = keyboard.next().toUpperCase().charAt(0);
+				if (modelSelection == 'A') {
+					modelEntry = "Jaguar";
+				}
+				else if (modelSelection == 'B') {
+					modelEntry = "Snow Leopard";
+				}
+				else if (modelSelection == 'C') {
+					modelEntry = "Sabertooth";
+				}
+				Computer model = catalog.findComputerByModelId(modelEntry);
+				//I have to double search for the entered value, both here and in my Catalog due to needing to verify the entry, I am not sure how else I could have done this.
+				//I know I can't have System.out.print in my Classes, so I don't know how to verify my entry, but also still pass a String to the modifyModelPrice without searching the arraylist 2x.
+				while(model==null) {
+					System.out.println("The Model you entered is not Valid. Please Try Again!");
+					modelEntry = keyboard.next();
+					model = catalog.findComputerByModelId(modelEntry);
+				}
+				
+				return modelEntry;
+			}
+			private static String getCustomUpEntry(Scanner keyboard,Catalog catalog, ArrayList<Upgrade> upgradeList) {
+				System.out.println("Please TYPE the Upgrade you would like to Modify!");
+				String upgradeEntry = keyboard.next();
+				Upgrade upgrade = catalog.findUpgradeByName(upgradeEntry);
+				//same thing for this search.
+				while(upgrade==null) {
+					System.out.println("The Upgrade that you entered is not Valid. Please Try Again!");
+				}
+				return upgradeEntry;
+			}
+			private static double getNewPrice(Scanner keyboard) {
+				//Eclipse DOES NOT like the idea of me just passing our other keyboard input
+				//to here for a double, so I ended up making a separate one for just this Method.
+				System.out.println("Please TYPE a new value for the Item.");
+				System.out.println("Example: 399.99");
+				double newPrice = keyboard.nextDouble();
+				return newPrice;
+			}
+			
+		}
+
+
+
