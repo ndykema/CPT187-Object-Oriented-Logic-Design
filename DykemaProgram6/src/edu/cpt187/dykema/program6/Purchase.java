@@ -41,7 +41,7 @@ public void addPurchase(Purchase transaction) {
 
 }
 public ArrayList<Purchase> copyPurchaseList() {
-	return purchaseList;
+    return new ArrayList<>(purchaseList);
 }
 }
 
