@@ -1,5 +1,3 @@
-package edu.cpt187.dykema.program6;
-
 public class Upgrade {
 		private String name;
 		private String description;
