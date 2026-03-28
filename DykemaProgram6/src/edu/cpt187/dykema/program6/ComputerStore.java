@@ -1,5 +1,3 @@
-package edu.cpt187.dykema.program6;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
