@@ -10,7 +10,7 @@ public class ComputerStore {
 				
 				ArrayList<Computer> baseModelList = catalog.getBaseModelList();
 				ArrayList<Upgrade> upgradeList = catalog.getUpgradeList();
-				ArrayList<Purchase> purchaseList = purchases.copyPurchaseList();
+	
 				char baseModelSelection = 0;
 				char upgradeSelection;
 				Computer computer;
@@ -28,7 +28,6 @@ public class ComputerStore {
 						Purchase purchase1 = new Purchase(computer,upgrade);
 						displayPurchaseReport(purchase1);
 						purchases.addPurchase(purchase1);
-						purchases.copyPurchaseList();
 						}
 					} 
 					else if (mainSelection == 'B'){
@@ -39,13 +38,13 @@ public class ComputerStore {
 						catalog.modifyUpgradePrice(getCustomUpEntry(keyboard,catalog,upgradeList),getNewPrice(keyboard));
 						System.out.println("The New Update price has been Updated!");	
 					}
-					else if (mainSelection =='D'){
-						displayListOfPurchases(purchaseList);
+					else if (mainSelection == 'D') {
+   						displayListOfPurchases(purchases.copyPurchaseList());
 					}
 					mainSelection = getMainSelection(keyboard);
 				}
 				keyboard.close();
-				displayListOfPurchases(purchaseList);
+				displayListOfPurchases(purchases.copyPurchaseList());
 			}
 
 			private static char getMainSelection(Scanner keyboard) {
